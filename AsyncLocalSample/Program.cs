@@ -2,9 +2,10 @@
 
 class NumberAdder
 {
-    public int A;
-    public int B;
-    public override string ToString() => $"{A} + {B} = {A + B}";
+    public AsyncLocal<int> A = new();
+    public AsyncLocal<int> B = new();
+
+    public override string ToString() => $"{A.Value} + {B.Value} = {A.Value + B.Value}";
 }
 
 static class Demo
@@ -19,26 +20,18 @@ static class Demo
             TestNumAdder("Bob", 3, 4),
             TestNumAdder("Charlie", 5, 6),
             TestNumAdder("Diana", 7, 8),
-            TestNumAdder("Eve", 3, 8)
+            TestNumAdder("Eve", 6, 9)
         );
     }
 
-    // async 不能用 lock，改用 SemaphoreSlim 實現互斥鎖
-    private static readonly SemaphoreSlim semaphore = new(1, 1);
     static async Task TestNumAdder(string user, int a, int b)
     {
-        await semaphore.WaitAsync();
-        try
-        {
-            await Task.Delay(rand.Next(5, 700));
-            adder.A = a;
-            await Task.Delay(rand.Next(5, 700));
-            adder.B = b;
-            Console.WriteLine($" - {user,-10} Test {a} + {b} / Result: {adder, -12} T:{Thread.CurrentThread.ManagedThreadId}");
-        }
-        finally
-        {
-            semaphore.Release();
-        }
+        await Task.Delay(rand.Next(5, 500));
+        adder.A.Value = a;
+        await Task.Delay(rand.Next(5, 500));
+        adder.B.Value = b;
+        Console.WriteLine(
+            $" - {user, -10} Test {a} + {b} / Result: {adder, -12} T:{Thread.CurrentThread.ManagedThreadId}"
+        );
     }
 }
