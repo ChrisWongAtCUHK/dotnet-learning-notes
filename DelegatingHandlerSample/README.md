@@ -1,0 +1,1 @@
+# [如何攔截並記錄 HttpClient 發出的所有 HTTP Request 與 Response 資料](https://blog.miniasp.com/post/2024/04/26/Use-DelegatingHandler-in-HttpClient-to-Debug-HTTP-package)
