@@ -27,3 +27,31 @@ var copiedPosts = new string[5];
 Array.Copy(posts, 0, copiedPosts, 0, 5);
 foreach (var post in copiedPosts)
   Console.WriteLine(post); // Outputs the first 5 posts
+
+var data = new Tuple<int, bool>[] {
+    new(20, true),
+    new(50, true),
+    new(35, false),
+    new(55, true),
+    new(16, false)
+};
+
+var trainingData = new ArraySegment<Tuple<int, bool>>(data, 0, 3);
+var testingData = new ArraySegment<Tuple<int, bool>>(data, 3, 2);
+
+Console.WriteLine("Training Data:");
+foreach (var record in trainingData)
+  Console.WriteLine(record);
+
+Console.WriteLine();
+Console.WriteLine("Testing Data:");
+foreach (var record in testingData)
+  Console.WriteLine(record);
+
+/** The same thing can be achieved using the ArraySegment<T>.Slice() method:
+ * ...
+ * var arraySegment = new ArraySegment<Tuple<int, bool>>(data);
+ * var trainingData = arraySegment.Slice(0, 3);
+ * var testingData = arraySegment.Slice(3, 2);
+ * ...
+ */
