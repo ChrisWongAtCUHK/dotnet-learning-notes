@@ -16,3 +16,9 @@ catch (ArgumentOutOfRangeException ex)
 {
   Console.WriteLine($"Error: {ex.Message}");
 }
+
+var posts = new string[] { "post1", "post2", "post3", "post4", "post5", "post6", "post7", "post8",
+    "post9", "post10" };
+var slicedPosts = posts.Skip(0).Take(5);
+foreach (var post in slicedPosts)
+  Console.WriteLine(post); // Outputs the first 5 posts
