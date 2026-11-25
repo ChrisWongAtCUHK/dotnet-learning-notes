@@ -22,3 +22,8 @@ var posts = new string[] { "post1", "post2", "post3", "post4", "post5", "post6",
 var slicedPosts = posts.Skip(0).Take(5);
 foreach (var post in slicedPosts)
   Console.WriteLine(post); // Outputs the first 5 posts
+
+var copiedPosts = new string[5];
+Array.Copy(posts, 0, copiedPosts, 0, 5);
+foreach (var post in copiedPosts)
+  Console.WriteLine(post); // Outputs the first 5 posts
